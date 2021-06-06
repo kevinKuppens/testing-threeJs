@@ -1,0 +1,25 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Mesh", function () {
+  return Mesh;
+});
+var _three = require('three');
+class Mesh {
+  static setMaterial(materialType, materialOptions) {
+    switch (materialType) {
+      case 'basic':
+        console.log('basic');
+        break;
+      case 'phong':
+        console.log('phong');
+        break;
+      default:
+        throw new Error('NO TYPE FOUND');
+    }
+  }
+  static createBasicBox(scales, materialType, materialOptions) {
+    const geometry = new _three.BoxGeometry(scales.width, scales.height, scales.depth);
+    const material = this.setMaterial(materialType, materialOptions);
+    return new _three.Mesh(geometry, material);
+  }
+}

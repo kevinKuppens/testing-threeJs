@@ -1,0 +1,4 @@
+const init = () => {
+  console.log('INIT');
+};
+window.addEventListener('load', init);

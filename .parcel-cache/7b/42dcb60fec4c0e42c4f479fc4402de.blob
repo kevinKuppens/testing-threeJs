@@ -1,0 +1,7 @@
+var _controllersRendererController = require('./controllers/renderer.controller');
+const init = () => {
+  const renderer = _controllersRendererController.Renderer.setRenderer();
+  console.log(renderer);
+  console.log('INIT');
+};
+window.addEventListener('load', init);

@@ -1,0 +1,31 @@
+var _controllersCameraController = require('./controllers/camera.controller');
+var _controllersMeshContoller = require('./controllers/mesh.contoller');
+var _controllersRendererController = require('./controllers/renderer.controller');
+var _controllersSceneController = require('./controllers/scene.controller');
+const init = () => {
+  const renderer = _controllersRendererController.Renderer.setRenderer();
+  const camera = _controllersCameraController.Camera.setCamera();
+  const scene = _controllersSceneController.Scene.setScene();
+  const cubeDimension = {
+    width: 1,
+    height: 1,
+    depth: 1
+  };
+  const cubeMaterial = {
+    color: 0x44aa88
+  };
+  const cube = _controllersMeshContoller.Mesh.createBasicBox(cubeDimension, cubeMaterial);
+  scene.add(cube);
+  // Camera position
+  camera.position.z = 2;
+  // render
+  const render = time => {
+    time *= 0.001;
+    cube.rotation.x = time;
+    cube.rotation.y = time;
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+  };
+  requestAnimationFrame(render);
+};
+window.addEventListener('load', init);

@@ -1,0 +1,11 @@
+var _three = require('three');
+const init = () => {
+  console.log('INIT');
+};
+window.addEventListener('load', init);
+const renderer = new _three.BoxGeometry();
+// const loader = new THREE.OBJLoader();
+// loader.load('citern.glb', (element)=>{
+// console.log(element);
+// })
+console.log(renderer);

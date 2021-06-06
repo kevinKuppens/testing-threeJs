@@ -1,0 +1,30 @@
+{
+  "name": "threejs-demo",
+  "version": "0.0.1",
+  "description": "demo of three js base functionality",
+  "main": "app.game.ts",
+  "author": "Kevin Kuppens",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^15.9.0",
+    "@types/three": "^0.129.1",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.0",
+    "prettier-plugin-organize-imports": "^2.1.0",
+    "three": "^0.129.0",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.3.2"
+  },
+  "scripts": {
+    "dev": "parcel ./src/index.html"
+  },
+  "dependencies": {
+    "parcel": "^2.0.0-beta.2"
+  }
+}

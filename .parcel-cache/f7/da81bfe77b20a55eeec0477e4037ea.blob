@@ -1,0 +1,15 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Camera", function () {
+  return Camera;
+});
+var _three = require('three');
+class Camera {
+  static setCamera = () => {
+    const fov = 75;
+    const aspect = 2;
+    const near = 0.1;
+    const far = 5;
+    return new _three.PerspectiveCamera(fov, aspect, near, far);
+  };
+}

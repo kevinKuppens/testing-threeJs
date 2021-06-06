@@ -1,0 +1,7 @@
+var _controllersCameraController = require('./controllers/camera.controller');
+var _controllersRendererController = require('./controllers/renderer.controller');
+const init = () => {
+  const renderer = _controllersRendererController.Renderer.setRenderer();
+  const camera = _controllersCameraController.Camera.setCamera();
+};
+window.addEventListener('load', init);

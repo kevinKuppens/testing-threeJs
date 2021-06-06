@@ -1,0 +1,13 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Lights", function () {
+  return Lights;
+});
+var _three = require('three');
+class Lights {
+  static createPointLight(options) {
+    const light = new _three.PointLight(options.color, options.intensity);
+    light.position.set(options.positions[0], options.positions[1], options.positions[2]);
+    return light;
+  }
+}

@@ -1,0 +1,14 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Renderer", function () {
+  return Renderer;
+});
+var _three = require('three');
+var _threeDefault = _parcelHelpers.interopDefault(_three);
+class Renderer {
+  static setRenderer = () => {
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    return new _threeDefault.default.WebGLRenderer();
+  };
+}

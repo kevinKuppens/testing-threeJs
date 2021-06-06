@@ -1,0 +1,6 @@
+const init = () => {
+  console.log('INIT');
+};
+window.addEventListener('load', init);
+const renderer = new THREE.BoxGeometry();
+console.log(renderer);

@@ -1,0 +1,13 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Mesh", function () {
+  return Mesh;
+});
+var _three = require('three');
+class Mesh {
+  static createBasicBox(scales, materialOptions) {
+    const geometry = new _three.BoxGeometry(scales.width, scales.height, scales.depth);
+    const material = new _three.MeshBasicMaterial(materialOptions);
+    return new _three.Mesh(geometry, material);
+  }
+}

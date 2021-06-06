@@ -1,0 +1,11 @@
+var _controllersCameraController = require('./controllers/camera.controller');
+var _controllersRendererController = require('./controllers/renderer.controller');
+var _controllersSceneController = require('./controllers/scene.controller');
+const init = () => {
+  const renderer = _controllersRendererController.Renderer.setRenderer();
+  const camera = _controllersCameraController.Camera.setCamera();
+  const scene = _controllersSceneController.Scene.setScene();
+  // Camera position
+  camera.position.z = 2;
+};
+window.addEventListener('load', init);

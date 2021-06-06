@@ -1,0 +1,7 @@
+var _threeJs = require('./three.js');
+const init = () => {
+  console.log('INIT');
+};
+window.addEventListener('load', init);
+const renderer = new _threeJs.BoxGeometry();
+console.log(renderer);
