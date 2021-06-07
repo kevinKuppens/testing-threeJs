@@ -1,4 +1,7 @@
 import * as THREE from 'three';
+import { Scene } from 'three';
+import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
+
 
 interface Scales{
     width: number,
@@ -20,9 +23,17 @@ export class Mesh{
         }
     }
 
+    
     static createBasicBox(scales:Scales, materialType:string, materialOptions:MaterialOptions){
         const geometry = new THREE.BoxGeometry(scales.width, scales.height, scales.depth);
         const material = this.setMaterial(materialType, materialOptions);
         return new THREE.Mesh(geometry, material); 
+    }
+
+    static importModel(pathToModel:string, actualScene:Scene){
+        const gltfLoader = new GLTFLoader();
+        gltfLoader.load(pathToModel, (model) => {
+            actualScene.add(model.scene);
+        });
     }
 }

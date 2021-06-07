@@ -35,13 +35,25 @@ const init = () =>{
     scene.add(cube);
 
 
+    //IMPORT CUSTOM MODEL
+    Mesh.importModel('citern.glb', scene);
+
     //Camera position
     camera.position.z =2;
+
 
 
     //render
     const render = (time:number) =>{
         time *= 0.001;
+
+        //RESPONSIVE
+        if(Renderer.resizeRendererToDisplaySize(renderer)){
+             const canvas = renderer.domElement;
+        camera.aspect = canvas.clientWidth / canvas.clientHeight;
+        camera.updateProjectionMatrix();
+        }
+       
 
         //ANIMATIONS
         cube.rotation.x =time;

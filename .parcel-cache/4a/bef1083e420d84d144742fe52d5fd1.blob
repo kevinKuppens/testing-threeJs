@@ -1,0 +1,48 @@
+var _controllersCameraController = require('./controllers/camera.controller');
+var _controllersLightsController = require('./controllers/lights.controller');
+var _controllersMeshContoller = require('./controllers/mesh.contoller');
+var _controllersRendererController = require('./controllers/renderer.controller');
+var _controllersSceneController = require('./controllers/scene.controller');
+const init = () => {
+  const renderer = _controllersRendererController.Renderer.setRenderer();
+  const camera = _controllersCameraController.Camera.setCamera();
+  const scene = _controllersSceneController.Scene.setScene();
+  // LIGHTS
+  const pointLightOptions = {
+    color: 0xFFFFFFF,
+    intensity: 1,
+    positions: [-1, 2, 4]
+  };
+  const pointLight = _controllersLightsController.Lights.createPointLight(pointLightOptions);
+  scene.add(pointLight);
+  // MESHES
+  const cubeDimension = {
+    width: 1,
+    height: 1,
+    depth: 1
+  };
+  const cubeMaterial = {
+    color: 0x44aa88
+  };
+  const cube = _controllersMeshContoller.Mesh.createBasicBox(cubeDimension, 'phong', cubeMaterial);
+  scene.add(cube);
+  // Camera position
+  camera.position.z = 2;
+  // render
+  const render = time => {
+    time *= 0.001;
+    // RESPONSIVE
+    if (_controllersRendererController.Renderer.resizeRendererToDisplaySize(renderer)) {
+      const canvas = renderer.domElement;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    }
+    // ANIMATIONS
+    cube.rotation.x = time;
+    cube.rotation.y = time;
+    renderer.render(scene, camera);
+    requestAnimationFrame(render);
+  };
+  requestAnimationFrame(render);
+};
+window.addEventListener('load', init);

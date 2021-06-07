@@ -1,0 +1,25 @@
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "Renderer", function () {
+  return Renderer;
+});
+var _three = require('three');
+class Renderer {
+  static setRenderer = () => {
+    const canvas = document.createElement('canvas');
+    document.body.appendChild(canvas);
+    return new _three.WebGLRenderer({
+      canvas
+    });
+  };
+  static resizeRendererToDisplaySize(renderer) {
+    const canvas = renderer.domElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const needResize = canvas.width !== width || canvas.heght !== height;
+    if (needResize) {
+      renderer.setSize(width, height, false);
+    }
+    return needResize;
+  }
+}
