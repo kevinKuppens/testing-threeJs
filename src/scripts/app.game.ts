@@ -19,11 +19,12 @@ const init = () =>{
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-
+    //SET CAMERA
     const camera = Camera.setCamera();
+    //SET SCENE
     const scene = Scene.setScene();
 
-    
+    //IMPLEMENTING GUI FOR DEVELOPEMENT
     const gui = new dat.GUI();
 
 
@@ -38,6 +39,7 @@ const init = () =>{
         gui
     };
     const pointLight = Lights.createPointLight(pointLightOptions);
+        //ADD HELPERS TO LIGHTS
     const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
     scene.add(pointLight);
     scene.add(pointLightHelper);

@@ -1,25 +1,7 @@
 import * as THREE from 'three';
 import { Scene } from 'three';
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader';
-
-
-interface Scales{
-    width: number,
-    height: number,
-    depth?: number
-}
-
-interface MaterialOptions{
-    color: number
-}
-
-interface MeshOptions{
-    name:string,
-    position ?: number[],
-    scale ?:number[],
-    rotation ?:number[], 
-    gui ?:dat.GUI
-}
+import { EnemiesOptions, MaterialOptions, MeshOptions, Scales } from '../interfaces/mesh.interface';
 
 export class Mesh{
 
@@ -31,7 +13,6 @@ export class Mesh{
         }
     }
 
-    
     static createBasicBox(scales:Scales, materialType:string, materialOptions:MaterialOptions){
         const geometry = new THREE.BoxGeometry(scales.width, scales.height, scales.depth);
         const material = this.setMaterial(materialType, materialOptions);
@@ -44,12 +25,10 @@ export class Mesh{
     }
 
     static importModel(pathToModel:string, actualScene:Scene, options?:MeshOptions){
-        const gltfLoader = new GLTFLoader();
-       
+        const gltfLoader = new GLTFLoader();     
         gltfLoader.load(pathToModel, (model) => {
             model.scene.name = `${pathToModel.split('.')[0]}`;
-
-             model.scene.traverse( ( node:any ) => {
+            model.scene.traverse( ( node:any ) => {
                     if ( node.isMesh ) { node.castShadow = true; }
                     } );
             if(options?.position){
@@ -74,8 +53,11 @@ export class Mesh{
                 meshScale.add(model.scene.scale, 'x');
                 meshGui.open();
             }
-           
             actualScene.add(model.scene);
         });
-        }
+    }
+    
+    static createEnemy(actualScene:Scene, options:EnemiesOptions){
+        //RANDOMLY CREATE ENEMIES ( scales, pop positions, speed, ...)
+    }
 }
