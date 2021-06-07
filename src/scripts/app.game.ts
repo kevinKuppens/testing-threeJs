@@ -1,52 +1,127 @@
-
+import * as THREE from 'three';
+import * as dat from 'dat.gui';
 import { Camera } from './controllers/camera.controller';
 import { Lights } from './controllers/lights.controller';
 import { Mesh } from './controllers/mesh.contoller';
 import { Renderer } from './controllers/renderer.controller';
 import { Scene } from './controllers/scene.controller';
+import { PlayerController } from './controllers/player.controller';
 
 
 const init = () =>{
+
+
+
+  
+
+    //SET RENDERER
     const renderer = Renderer.setRenderer();
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+
     const camera = Camera.setCamera();
     const scene = Scene.setScene();
+
+    
+    const gui = new dat.GUI();
 
 
     //LIGHTS
     const pointLightOptions = {
+        name : 'Light 01',
         color : 0xFFFFFFF,
         intensity : 1,
-        positions : [-1, 2, 4]
+        positions : [0, 1, 0],
+        shadow : true,
+        shadowSize : 1024, 
+        gui
     };
     const pointLight = Lights.createPointLight(pointLightOptions);
+    const pointLightHelper = new THREE.PointLightHelper(pointLight, 0.2);
     scene.add(pointLight);
+    scene.add(pointLightHelper);
+
+    
 
     //MESHES
     const cubeDimension = {
         width : 1,
-        height : 1,
-        depth : 1
+        height : 0.2,
+        depth : 0.1
     };
     const cubeMaterial = {
-        color : 0x415d43
+        color : 0xfc6703
     };
-    const cube = Mesh.createBasicBox(cubeDimension, 'phong', cubeMaterial);
+    const player = Mesh.createBasicBox(cubeDimension, 'phong', cubeMaterial);
+    scene.add(player);
+    player.castShadow = true;
+    player.receiveShadow = true;
+    const planeDimension = {
+        width : 7,
+        height : 7
+    };
+    const planeMaterial = {
+        color : 0x8fb996
+    };
+    const plane = Mesh.createBasicPlane(planeDimension, 'phong', planeMaterial);
+ 
+    scene.add(plane);
+    plane.receiveShadow = true;
 
-    scene.add(cube);
+    player.position.y = 0.15;
+    player.position.z = 0.75;
+    plane.rotation.x = -1.5708;
 
 
     //IMPORT CUSTOM MODEL
-    Mesh.importModel('citern.glb', scene);
+    const citernLeftOptions = {
+        name : 'citern left',
+        position : [-1, 0, 1.5],
+        scale : [0.2, 0.2, 0.2],
+        rotation : [0, -3.1416, 0],
+        gui
+    };
+    const citernCenterOptions = {
+        name : 'citern center',
+        position : [0, 0, 1.5],
+        scale : [0.2, 0.2, 0.2],
+        rotation : [0, -3.1416, 0],
+        gui
+    };
+    const citernRightOptions = {
+        name : 'citern right',
+        position : [1, 0, 1.5],
+        scale : [0.2, 0.2, 0.2],
+        rotation : [0, -3.1416, 0],
+        gui
+    };
 
+    
+    Mesh.importModel('citern.glb', scene, citernLeftOptions);
+    Mesh.importModel('citern.glb', scene, citernCenterOptions);
+    Mesh.importModel('citern.glb', scene, citernRightOptions);
+   
+  
+  
+    
+   
+    
     //Camera position
     camera.position.z =2;
+    camera.position.y =3.5;
+    camera.rotation.x = -1;
 
+
+    // PLAYER CONTROLLER INITIATE
+    const speed = 0.5;
+    const limit = 1.5;
+    PlayerController.setPlayerControls(speed, limit, player);
 
 
     //render
-    const render = (time:number) =>{
-        time *= 0.001;
-
+    const render = () =>{
+        // time *= 0.000000001;
         //RESPONSIVE
         if(Renderer.resizeRendererToDisplaySize(renderer)){
              const canvas = renderer.domElement;
@@ -56,8 +131,9 @@ const init = () =>{
        
 
         //ANIMATIONS
-        cube.rotation.x =time;
-        cube.rotation.y =time;
+        // cube.rotation.x =time;
+        // cube.rotation.y =time;
+       
         
         renderer.render(scene, camera);
 
