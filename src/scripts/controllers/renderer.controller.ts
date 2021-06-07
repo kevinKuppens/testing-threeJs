@@ -6,7 +6,7 @@ export class Renderer{
         const canvas = document.createElement('canvas');
         document.body.appendChild(canvas);
 
-        return new THREE.WebGLRenderer({canvas});
+        return new THREE.WebGLRenderer({canvas, alpha:true});
     } 
 
     static resizeRendererToDisplaySize(renderer:WebGLRenderer){

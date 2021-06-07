@@ -29,6 +29,11 @@ export class Mesh{
         const material = this.setMaterial(materialType, materialOptions);
         return new THREE.Mesh(geometry, material); 
     }
+    // static createBasicPlane(scales:Scales, materialType:string, materialOptions:MaterialOptions){
+    //     const geometry = new THREE.PlaneGeometry(scales.width, scales.height, scales.depth);
+    //     const material = this.setMaterial(materialType, materialOptions);
+    //     return new THREE.Mesh(geometry, material); 
+    // }
 
     static importModel(pathToModel:string, actualScene:Scene){
         const gltfLoader = new GLTFLoader();

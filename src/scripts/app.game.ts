@@ -28,7 +28,7 @@ const init = () =>{
         depth : 1
     };
     const cubeMaterial = {
-        color : 0x44aa88
+        color : 0x415d43
     };
     const cube = Mesh.createBasicBox(cubeDimension, 'phong', cubeMaterial);
 

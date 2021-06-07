@@ -7,7 +7,7 @@ html{
 
 body{
     margin : 0;
-    background-color:#A1CCA5;
+    background-color:cornflowerblue;
 }
 
 canvas{
@@ -15,3 +15,4 @@ canvas{
     width:100vw;
     display:block;
 }
+/*# sourceMappingURL=index.HASH_REF_81b008802739d8750250b5ddd6ec490d.css.map */

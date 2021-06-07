@@ -7,7 +7,7 @@ html{
 
 body{
     margin : 0;
-    background-color:#A1CCA5;
+    background-color:cornflowerblue;
 }
 
 canvas{
