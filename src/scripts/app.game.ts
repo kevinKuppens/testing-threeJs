@@ -7,6 +7,7 @@ import { Renderer } from './controllers/renderer.controller';
 import { Scene } from './controllers/scene.controller';
 import { PlayerController } from './controllers/player.controller';
 import { EnemyController } from './controllers/enemy.controller';
+import { GameController } from './controllers/game.controller';
 
 
 const init = () =>{
@@ -96,23 +97,41 @@ const init = () =>{
         gui
     };
 
-    
+    const protectedColliders:any[] =[];
     Mesh.importModel('citern.glb', scene, citernLeftOptions);
+    const citernLeftColider:any = Mesh.modelBoxCollider(citernLeftOptions);
+    citernLeftColider.position.set(citernLeftOptions.position[0], (citernLeftOptions.scale[1]*3)/2, citernLeftOptions.position[2]);
+    scene.add(citernLeftColider);
+    protectedColliders.push(citernLeftColider);
+
     Mesh.importModel('citern.glb', scene, citernCenterOptions);
-    Mesh.importModel('citern.glb', scene, citernRightOptions);
+    const citernCenterColider:any = Mesh.modelBoxCollider(citernCenterOptions);
+    citernCenterColider?.position.set(citernCenterOptions.position[0], (citernCenterOptions.scale[1]*3)/2, citernCenterOptions.position[2]);
+    scene.add(citernCenterColider);
+    protectedColliders.push(citernCenterColider);
    
+
+    Mesh.importModel('citern.glb', scene, citernRightOptions);
+    const citernRightColider:any = Mesh.modelBoxCollider(citernRightOptions);
+    citernRightColider?.position.set(citernRightOptions.position[0], (citernRightOptions.scale[1]*3)/2, citernRightOptions.position[2]);
+    scene.add(citernRightColider);
+    protectedColliders.push(citernRightColider);
+
+    
+
+
     const enemyOptions= {
         scale : {
             radiusMin : 1,
             radiusMax : 2.1,
             segmentNumber : 32
         },
-        positionLimit : 0.5,
+        positionLimit : 1.5,
         colors : [0xE27D60, 0x85DCB, 0xE8A87C]
     };
-    const enemy = EnemyController.spawnEnemy(enemyOptions);
-    enemy.name = 'enemy';
-    scene.add(enemy);
+    const enemyCount = 5;
+    EnemyController.spawnEnemies(scene, enemyCount, enemyOptions);
+    // scene.add(enemy);
    
     
     //Camera position
@@ -125,8 +144,10 @@ const init = () =>{
     const speed = 0.5;
     const limit = 1.5;
     PlayerController.setPlayerControls(speed, limit, player);
-
-
+    
+   
+    
+       
     
     //render
     const render = () =>{
@@ -137,29 +158,29 @@ const init = () =>{
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
         }
- 
-
+        
+    
+        
         //ANIMATIONS
         // cube.rotation.x =time;
         // cube.rotation.y =time;
-        if(scene.getObjectByName('enemy')){
-             if(enemy.position.z <= 1.5){
-            EnemyController.enemyAnimation(0.01, enemy);
-            }else{
-            scene.remove(enemy);
-        }
-        }
-        const playerBoundary = PlayerController.playerBoundary(player, player.geometry);
-        if(scene.children.find((el) => el.name === 'enemy')){
-            const enemyBoundary = EnemyController.enemyBoundary(enemy, enemy.geometry);
-           
-            if(enemyBoundary.boundaryRight >= playerBoundary.boundaryLeft
-                 && enemyBoundary.boundaryLeft <= playerBoundary.boundaryRight 
-                && enemyBoundary.boundaryFront >= playerBoundary.boundaryFront){
-                     scene.remove(enemy);
-                }
-        }
         
+        //RESPAWN AND COLLISION
+        const enemiesOnScene =scene.children.filter(child => { return child.name.includes('enemy');}); // IF ENEMIES SPAWNS
+        
+        
+        
+        const playerGeometry = player.geometry;
+        if(enemiesOnScene.length>0){
+            
+            enemiesOnScene.forEach((enemy) => {
+                //IF ENEMIES GOES OUT THE SCENE
+                GameController.enemiesOutOfField(enemy, scene, enemyOptions);
+                //IF PLAYER COLLIDE WITH ENEMIES
+                GameController.playerCollision(player, playerGeometry, enemy, scene, enemyOptions);
+                GameController.protectedCollision(protectedColliders, enemy, scene, enemyOptions);
+            });
+        }
         
        
         renderer.render(scene, camera);

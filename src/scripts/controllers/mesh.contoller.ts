@@ -56,7 +56,19 @@ export class Mesh{
             actualScene.add(model.scene);
         });
     }
-    
+    static modelBoxCollider(options:MeshOptions){
+        if(options.scale){
+             const width:number = options.scale[0]*3;
+             const height:number = options.scale[1]*3;
+             const depth:number = options.scale[1]*3;
+             const boxCollider = new THREE.BoxGeometry( width, height, depth );
+             const material = new THREE.MeshPhongMaterial({opacity:0, transparent:true});
+
+             return new THREE.Mesh(boxCollider, material);
+        }
+       
+        
+    }
     static createEnemy( options:EnemiesOptions){
         //RANDOMLY CREATE ENEMIES ( scales, pop positions, speed, ...)
         let scale = Math.floor(Math.random()*options.scale.radiusMax);
