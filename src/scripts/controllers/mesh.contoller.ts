@@ -57,7 +57,20 @@ export class Mesh{
         });
     }
     
-    static createEnemy(actualScene:Scene, options:EnemiesOptions){
+    static createEnemy( options:EnemiesOptions){
         //RANDOMLY CREATE ENEMIES ( scales, pop positions, speed, ...)
+        let scale = Math.floor(Math.random()*options.scale.radiusMax);
+        while(scale < options.scale.radiusMin){
+            scale = Math.floor(Math.random()*options.scale.radiusMax);
+        }
+        const materialIndex = Math.floor(Math.random()*options.colors.length);
+        const materialColor = options.colors[materialIndex];
+        const materialOptions = {
+            color : materialColor
+        };
+        const enemyGeometry = new THREE.SphereGeometry(scale/10, options.scale.segmentNumber, options.scale.segmentNumber);
+        const enemyMaterial = this.setMaterial('phong', materialOptions);
+
+        return new THREE.Mesh(enemyGeometry, enemyMaterial);
     }
 }

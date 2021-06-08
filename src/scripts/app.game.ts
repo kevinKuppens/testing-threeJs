@@ -6,13 +6,10 @@ import { Mesh } from './controllers/mesh.contoller';
 import { Renderer } from './controllers/renderer.controller';
 import { Scene } from './controllers/scene.controller';
 import { PlayerController } from './controllers/player.controller';
+import { EnemyController } from './controllers/enemy.controller';
 
 
 const init = () =>{
-
-
-
-  
 
     //SET RENDERER
     const renderer = Renderer.setRenderer();
@@ -71,7 +68,7 @@ const init = () =>{
     scene.add(plane);
     plane.receiveShadow = true;
 
-    player.position.y = 0.15;
+    player.position.y = 0.5;
     player.position.z = 0.75;
     plane.rotation.x = -1.5708;
 
@@ -104,9 +101,18 @@ const init = () =>{
     Mesh.importModel('citern.glb', scene, citernCenterOptions);
     Mesh.importModel('citern.glb', scene, citernRightOptions);
    
-  
-  
-    
+    const enemyOptions= {
+        scale : {
+            radiusMin : 1,
+            radiusMax : 2.1,
+            segmentNumber : 32
+        },
+        positionLimit : 0.5,
+        colors : [0xE27D60, 0x85DCB, 0xE8A87C]
+    };
+    const enemy = EnemyController.spawnEnemy(enemyOptions);
+    enemy.name = 'enemy';
+    scene.add(enemy);
    
     
     //Camera position
@@ -121,6 +127,7 @@ const init = () =>{
     PlayerController.setPlayerControls(speed, limit, player);
 
 
+    
     //render
     const render = () =>{
         // time *= 0.000000001;
@@ -130,13 +137,31 @@ const init = () =>{
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
         }
-       
+ 
 
         //ANIMATIONS
         // cube.rotation.x =time;
         // cube.rotation.y =time;
-       
+        if(scene.getObjectByName('enemy')){
+             if(enemy.position.z <= 1.5){
+            EnemyController.enemyAnimation(0.01, enemy);
+            }else{
+            scene.remove(enemy);
+        }
+        }
+        const playerBoundary = PlayerController.playerBoundary(player, player.geometry);
+        if(scene.children.find((el) => el.name === 'enemy')){
+            const enemyBoundary = EnemyController.enemyBoundary(enemy, enemy.geometry);
+           
+            if(enemyBoundary.boundaryRight >= playerBoundary.boundaryLeft
+                 && enemyBoundary.boundaryLeft <= playerBoundary.boundaryRight 
+                && enemyBoundary.boundaryFront >= playerBoundary.boundaryFront){
+                     scene.remove(enemy);
+                }
+        }
         
+        
+       
         renderer.render(scene, camera);
 
         requestAnimationFrame(render);

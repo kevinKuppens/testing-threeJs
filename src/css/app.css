@@ -11,7 +11,7 @@ body{
 }
 
 canvas{
-    height : 100vh;
+    height : calc(100vh/1,777777778);
     width:100vw;
     display:block;
     position:absolute;

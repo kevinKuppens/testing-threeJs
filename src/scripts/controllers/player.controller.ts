@@ -1,4 +1,4 @@
-import { Object3D } from 'three';
+import { BoxGeometry, Object3D } from 'three';
 import * as THREE from 'three';
 
 export class PlayerController{
@@ -12,5 +12,12 @@ export class PlayerController{
                 player.position.x = (mouse.x + offset)*speed;
             }
         });
+    }
+    static playerBoundary (playerObject:Object3D, playerGeometry:BoxGeometry){
+        const boundaryRight = (playerObject.position.x + (playerGeometry.parameters.width/2));
+        const boundaryLeft = (playerObject.position.x - (playerGeometry.parameters.width/2));
+        const boundaryFront = (playerObject.position.z);
+
+        return {boundaryLeft, boundaryRight, boundaryFront};
     }
 }

@@ -18,15 +18,13 @@ interface MeshOptions{
 
 interface EnemiesOptions{
     scale : {
-        min:number,
-        max:number
+        radiusMin:number,
+        radiusMax:number, 
+        segmentNumber:number
     },
-    spawnLimit : {
-        min:number,
-        max:number
-    },
+    positionLimit :number,
     colors : number[],
-    speed : {
+    speed ?: {
         min : number,
         max:number
     }
