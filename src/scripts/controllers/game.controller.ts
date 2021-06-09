@@ -4,7 +4,6 @@ import { EnemyController } from './enemy.controller';
 import { PlayerController } from './player.controller';
 
 export class GameController{
-  
     static enemiesOutOfField(enemyEntity:Object3D, actualScene:Scene, options:EnemiesOptions){
         if(enemyEntity.position.z <= 2){
             EnemyController.enemyAnimation(0.01, enemyEntity);
@@ -25,6 +24,7 @@ export class GameController{
                         
                             actualScene.remove(enemyEntity);
                         EnemyController.spawnEnemies(actualScene, 1, options);
+                        return true;
                     }
                 }
     }
@@ -43,5 +43,23 @@ export class GameController{
                     EnemyController.spawnEnemies(actualScene, 1, options);
             }
         });
+    }
+
+     static updateScoring(currentScore:number, scoreField:HTMLElement){
+            currentScore += 10;
+            scoreField.innerText = currentScore.toString();
+            return currentScore;
+        
+
+        }
+    static levelGain(score:number, currentLevel:number, levelField:HTMLElement){
+        if(score%500 === 0){
+            currentLevel ++;
+            
+               levelField.innerText = currentLevel.toString();  
+          
+                  
+        }
+        return currentLevel; 
     }
 }

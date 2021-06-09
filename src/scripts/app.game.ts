@@ -8,8 +8,9 @@ import { Scene } from './controllers/scene.controller';
 import { PlayerController } from './controllers/player.controller';
 import { EnemyController } from './controllers/enemy.controller';
 import { GameController } from './controllers/game.controller';
+import { UiController } from './controllers/ui.controller';
 
-
+let gamePaused = false;
 const init = () =>{
 
     //SET RENDERER
@@ -22,6 +23,9 @@ const init = () =>{
     //SET SCENE
     const scene = Scene.setScene();
 
+
+    //UI
+    UiController.init();
     //IMPLEMENTING GUI FOR DEVELOPEMENT
     const gui = new dat.GUI();
 
@@ -145,8 +149,14 @@ const init = () =>{
     const limit = 1.5;
     PlayerController.setPlayerControls(speed, limit, player);
     
-   
-    
+   const scoreField:HTMLElement = document.getElementById('score-value') as HTMLElement;
+   const levelField:HTMLElement = document.getElementById('level-value') as HTMLElement;
+   const pauseMenu :HTMLElement = document.getElementById('pause-menu') as HTMLElement;
+
+    let score = 0;
+    let level = 1;
+    scoreField.innerText = score.toString();
+    levelField.innerText = level.toString();
        
     
     //render
@@ -177,17 +187,42 @@ const init = () =>{
                 //IF ENEMIES GOES OUT THE SCENE
                 GameController.enemiesOutOfField(enemy, scene, enemyOptions);
                 //IF PLAYER COLLIDE WITH ENEMIES
-                GameController.playerCollision(player, playerGeometry, enemy, scene, enemyOptions);
+                const playerHit = GameController.playerCollision(player, playerGeometry, enemy, scene, enemyOptions);
+                if(playerHit){
+                    score = GameController.updateScoring(score, scoreField);
+                    
+                      level = GameController.levelGain(score, level, levelField);  
+                    
+                    
+                }
                 GameController.protectedCollision(protectedColliders, enemy, scene, enemyOptions);
+
             });
         }
         
        
         renderer.render(scene, camera);
-
+        if(!gamePaused){
         requestAnimationFrame(render);
+        }
     };
-    requestAnimationFrame(render);
+    
+       requestAnimationFrame(render); 
+    
+   window.addEventListener('keydown', (key) => {
+    if(key.key === 'Escape'){
+        if(gamePaused){
+            gamePaused = false;
+            pauseMenu.classList.toggle('hidden');
+            requestAnimationFrame(render);
+        }else{
+            pauseMenu.classList.toggle('hidden');
+           gamePaused = true; 
+        }
+         
+    }
+   
+}); 
 };
 
 window.addEventListener('load', init);
