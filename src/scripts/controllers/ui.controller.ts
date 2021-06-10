@@ -13,9 +13,9 @@ export class UiController{
 
         const pauseUi = `<div id='pause-menu' class='hidden'>
         <p>Pause</p>
-        <button>options</button>
-        <button>back to main menu</button>
-        <button>back</button>
+            <button>options</button>
+            <button>back to main menu</button>
+            <button>back</button>
         </div>`;
          const divUi = document.createElement('div');
          divUi.innerHTML = scoreUi + levelUi + pauseUi;
