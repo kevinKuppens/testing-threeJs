@@ -11,6 +11,17 @@ export class APIRest{
         };
         return APIRest.execute('api/login', options);
     }
+    static register(values:any){
+        const options = {
+            method:'POST',
+            body : JSON.stringify(values),
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            }
+        };
+        return APIRest.execute('api/user', options);
+    }
     static async execute(action: string, options ={}){
         try{
             const rawRespone = await fetch(`${this.baseUrl}/${action}`, options);

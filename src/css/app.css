@@ -60,35 +60,24 @@ canvas{
     margin-left: 0.3rem;
 }
 .title-description{
-    font-size:1.2rem;
+    font-size:1rem;
+    line-height: 1.5;
     font-style: italic;
-    margin-bottom:1rem;
+    margin-bottom:2rem;
     font-weight: 200;
-    text-align: center;
+    text-align: left;
 }
 .form-buttons{
     display:flex;
     justify-content: flex-end;
     margin-top:1.5rem;
+    margin-right: 1.5rem;
 }
-.form-buttons button{  
-    margin-right:1rem;
-    padding:0.3rem 1.7rem;
-    background-color:transparent;
-    color: #d3d6b2;
-    border:0;
-}
+
 .form-buttons button:hover, input:hover{
     cursor: pointer;
 }
-.form-buttons input{
-    padding:0.7rem 2rem;
-    margin-right : 2rem;
-    background-color: white;
-    color:#569bc9;
-    border-radius: 0.3rem;
-    border : 2px solid white;
-}
+
 .file-div{
      display: flex;
      flex-direction: column;
@@ -146,8 +135,9 @@ canvas{
 }
 
 #profile-picture{
-    width:10rem;
-    height:10rem;
+    width:5rem;
+    height:5rem;
+    margin-right:2rem;
     border-radius: 50%;
     box-shadow: 0 0 10px rgba(240, 240, 240, 0.5);
 }
@@ -155,7 +145,7 @@ canvas{
 
 /* LOGIN  */
 
-#login-box{
+.form-box{
     margin: 15rem auto;
     border-radius: 0.7rem;
     padding : 2rem 3rem 4rem 3rem;
@@ -168,20 +158,31 @@ canvas{
     display:flex;
     flex-direction: column;
 }
-#login-box h3{
-    padding-bottom:0.5rem;
-    margin-bottom:2rem;
+.form-box h3{
+    
     font-size:1.7rem;
     position: relative;
 }
-#login-box h3:after{
+.box-header{
+    display:flex;
+    justify-content: space-between;
+    padding-bottom:0.5rem;
+    margin-bottom:2rem;
+    position: relative;
+}
+.box-header:after{
     content : "";
-    width:80%;
+    width:100%;
     height:2px;
     background-color:#203647;
     position : absolute;
     left:0;
     bottom:0;
+}
+.register-link{
+    cursor: pointer;
+    color:#4DA8DA !important;
+    font-size: 1rem;
 }
 label{
     font-size : 0.7rem;

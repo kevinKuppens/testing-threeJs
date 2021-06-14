@@ -5,35 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/app.css">
+    <script src="../scripts/app.index.ts" defer></script>
     <title>Defender</title>
 </head>
 <body>
-    <div class="darker-page">
-    </div>
-    <div id="reg-div">
-        <h3>Register ! ;)</h3>
+    <div class="form-box">
+        <div class="box-header">
+            <h3>Register ! ;)</h3>
+        </div>
         <p class="title-description">Join us and get access to the game, statistics, leaderboard and more !</p>
-        <form id="reg-form"method="get">
-            <input type="text" class="text-field" name="username" placeholder="Username" required>
-            <input type="text" class="text-field" name="email" placeholder="email" required>
-            <input type="password" class="text-field" name="password" placeholder="password" required>
-            <div id="user-names">
-               <input type="text" class="text-field flex-50" name="firstname" placeholder="firstname">
-                <input type="text" class="text-field flex-50 spacing-lft" name="lastname" placeholder="lastname"> 
+        <form id="reg-form" onsubmit="return false">
+            <label for="username">Username</label>
+            <input type="text" class="input-field" name="username" required>
+            <label for="email">Email</label>
+            <input type="text" class="input-field" name="email" required>
+            <label for="password">Password</label>
+            <input type="password" class="input-field" name="password" required>   
+            <label for="fisrtname">First name</label>
+            <input type="text" class="input-field flex-50" name="firstname" >  
+            <label for="lastname">Last name</label>
+            <input type="text" class="input-field flex-50" name="lastname"  >        
+            <div class="form-buttons">
+                <button class='cancel-btn'>Cancel</button>
+                <input type="submit" class='cta-btn' value="register" >       
             </div>
-            <div id="user-pic">
-                <div class="file-div">
-                    <label for="profile-pic"class="file-label">Choose a profile picture :</label>
-                    <input type="file" class="file-field" name="profile-pic">
-                     <div class="form-buttons">
-                        <button>Cancel</button>
-                        <input type="submit" value="register" >  
-                    </div>
-                </div>
-                <div id="profile-picture">
-                    <img src="../img/user-default.png" alt="default profile picture" style="width:inherit; filter:invert();">
-                </div>
-            </div>
+                
+            
            
         </form>
     </div>
