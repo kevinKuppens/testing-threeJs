@@ -10,6 +10,9 @@ export class UserController{
         res.json(`users : ${users}`);
     }
     static async newUser(req:Request, res:Response){
+        if(!req.body.profilePic){
+            req.body.profilePic = 'default-user.png'
+        }
         return res.json(await UserController.model.register(req.body, req.body.password));
     }
 
