@@ -6,9 +6,19 @@ export class UserController{
     static model = getModelForClass(User);
 
     static async getAll(req:Request, res:Response){
-        res.send('OK');
+        const users = await UserController.model.find({}).select('username');
+        res.json(`users : ${users}`);
     }
     static async newUser(req:Request, res:Response){
-        return res.json(await UserController.model.create(req.body));
+        return res.json(await UserController.model.register(req.body, req.body.password));
+    }
+
+    static async updateUser(req:Request, res:Response){
+        const { id } = req.params;
+        return res.json(await UserController.model.updateOne({_id:id}, req.body));
+    }
+    static async deleteUser(req:Request, res:Response){
+        const { id } = req.params;
+        return res.json(await UserController.model.deleteOne({_id:id}));
     }
 }
