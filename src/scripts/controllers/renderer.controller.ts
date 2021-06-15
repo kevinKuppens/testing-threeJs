@@ -4,8 +4,9 @@ import { WebGLRenderer } from 'three';
 export class Renderer{
     static setRenderer = () =>{
         const canvas = document.createElement('canvas');
+        const frame: HTMLElement = document.getElementById('container') as HTMLElement;
         canvas.setAttribute('id', 'game-canvas');
-        document.body.appendChild(canvas);
+        frame.appendChild(canvas);
 
         return new THREE.WebGLRenderer({canvas, alpha:true});
     } 

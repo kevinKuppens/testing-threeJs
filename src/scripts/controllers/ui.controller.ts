@@ -18,8 +18,9 @@ export class UiController{
             <button>back</button>
         </div>`;
          const divUi = document.createElement('div');
+         const frame: HTMLElement = document.getElementById('container') as HTMLElement;
          divUi.innerHTML = scoreUi + levelUi + pauseUi;
-         document.body.append(divUi);
+         frame.append(divUi);
     }
 
     static displayScore(scoreValue:number, field:HTMLElement){
